@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Film - VidPlay</title>
+  <meta name="description" content="Jelajahi katalog film viral, trending, live, dan populer">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #141414;
+      --bg-card: #1a1a1a;
+      --bg-hover: #222;
+      --accent: #ff4757;
+      --accent-hover: #ff6b7a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --border: #2a2a2a;
+      --success: #2ed573;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ==================== HEADER ==================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), #ff6b7a);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+
+    /* ==================== MAIN ==================== */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .page-title h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.3rem;
+    }
+
+    .page-title p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* ==================== TOOLBAR ==================== */
+    .toolbar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 0.6rem 1.1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      color: var(--text-primary);
+      border-color: #3a3a3a;
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, var(--accent), #ff6b7a);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    }
+
+    /* ==================== GRID ==================== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ==================== CARD ==================== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      aspect-ratio: 9 / 14;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 15px 40px rgba(255, 71, 87, 0.2);
+    }
+
+    .card-thumb {
+      position: relative;
+      flex: 1;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      overflow: hidden;
+    }
+
+    .card-thumb::after {
+      content: '▶';
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      background: rgba(255, 71, 87, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      padding-left: 4px;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.25s;
+      box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
+    }
+
+    .card:hover .card-thumb::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.6rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: white;
+      z-index: 2;
+    }
+
+    .card-badge.live {
+      background: var(--accent);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .card-info {
+      padding: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-meta .rating {
+      color: #ffa502;
+      font-weight: 700;
+    }
+
+    /* ==================== EMPTY STATE ==================== */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state .icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+
+    .empty-state h3 {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ==================== MODAL ==================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.9);
+      transition: transform 0.25s;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 1rem;
+    }
+
+    .modal-close {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      font-family: inherit;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .modal-body {
+      padding: 1rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-video-container {
+      position: relative;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      margin-bottom: 1rem;
+    }
+
+    .modal-video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: var(--bg-card);
+      z-index: 5;
+    }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .modal-loading p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-error {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      text-align: center;
+      z-index: 5;
+    }
+
+    .modal-error.show { display: flex; }
+
+    .modal-error .icon { font-size: 2.5rem; }
+
+    .modal-error p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      max-width: 260px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #ff6b7a);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 71, 87, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--bg-hover);
+      border-color: #3a3a3a;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ==================== FOOTER ==================== */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+
+    footer span { color: var(--accent); }
+
+    /* ==================== TOAST ==================== */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.9rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 2000;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--accent); }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 640px) {
+      header { padding: 0.85rem 1rem; }
+      .logo { font-size: 1.1rem; }
+      .logo-icon { width: 32px; height: 32px; }
+      .nav-links a { padding: 0.4rem 0.75rem; font-size: 0.85rem; }
+      main { padding: 1rem; }
+      .page-title h1 { font-size: 1.5rem; }
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+      .card-thumb { font-size: 2.2rem; }
+      .card-title { font-size: 0.8rem; }
+      .filter-chips { width: 100%; overflow-x: auto; padding-bottom: 0.25rem; }
+      .chip { padding: 0.5rem 0.9rem; font-size: 0.8rem; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🎬</div>
+      <div class="logo-text">Vid<span>Play</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/film" class="active">Film</a>
+    </nav>
+  </header>
+
+  <!-- ==================== MAIN ==================== -->
+  <main>
+    <div class="page-title">
+      <h1>Katalog Film</h1>
+      <p>Jelajahi koleksi video viral, trending, live & populer</p>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari film atau video..."
+          autocomplete="off"
+        >
+      </div>
+      <div class="filter-chips" id="filterChips">
+        <button class="chip active" data-filter="all">Semua</button>
+        <button class="chip" data-filter="viral">🔥 Viral</button>
+        <button class="chip" data-filter="trending">📈 Trending</button>
+        <button class="chip" data-filter="live">🔴 Live</button>
+        <button class="chip" data-filter="populer">⭐ Populer</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid" id="filmGrid"></div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    © 2025 <span>VidPlay</span> — All rights reserved
+  </footer>
+
+  <!-- ==================== MODAL ==================== -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Video Player</h3>
+        <button class="modal-close" id="modalClose" aria-label="Tutup">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-video-container">
+          <!-- Loading -->
+          <div class="modal-loading" id="modalLoading">
+            <div class="spinner"></div>
+            <p>Memuat video...</p>
+          </div>
+
+          <!-- Error -->
+          <div class="modal-error" id="modalError">
+            <div class="icon">😕</div>
+            <p id="modalErrorMsg">Gagal memuat video</p>
+          </div>
+
+          <!-- Video -->
+          <video
+            id="modalVideo"
+            controls
+            playsinline
+            preload="metadata"
+            controlsList="nodownload"
+            style="display:none;"
+          ></video>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="btnPlayAgain">
+            🎲 <span>Video Lain</span>
+          </button>
+          <button class="btn btn-secondary" id="btnCopyModal">
+            📋 <span>Copy URL</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST ==================== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ==================== SCRIPT ==================== -->
+  <script>
+    // ==================== ELEMENTS ====================
+    const filmGrid      = document.getElementById('filmGrid');
+    const searchInput   = document.getElementById('searchInput');
+    const filterChips   = document.getElementById('filterChips');
+    const modal         = document.getElementById('videoModal');
+    const modalClose    = document.getElementById('modalClose');
+    const modalTitle    = document.getElementById('modalTitle');
+    const modalVideo    = document.getElementById('modalVideo');
+    const modalLoading  = document.getElementById('modalLoading');
+    const modalError    = document.getElementById('modalError');
+    const modalErrorMsg = document.getElementById('modalErrorMsg');
+    const btnPlayAgain  = document.getElementById('btnPlayAgain');
+    const btnCopyModal  = document.getElementById('btnCopyModal');
+    const toast         = document.getElementById('toast');
+
+    let currentFilter = 'all';
+    let currentSearch = '';
+    let currentUrl    = '';
+    let isFetching    = false;
+
+    // ==================== DATA KATALOG ====================
+    // Data statis (karena backend hanya menyediakan /api/video)
+    // Setiap item mewakili 1 video yang akan di-fetch saat diklik
+    const CATALOG = [
+      { id: 1,  title: 'Viral Hari Ini #1',      category: 'viral',    rating: 4.8, emoji: '🔥' },
+      { id: 2,  title: 'Trending TikTok #2',     category: 'trending', rating: 4.6, emoji: '📈' },
+      { id: 3,  title: 'Live Streaming #3',      category: 'live',     rating: 4.9, emoji: '🔴' },
+      { id: 4,  title: 'Populer Minggu Ini #4',  category: 'populer',  rating: 4.7, emoji: '⭐' },
+      { id: 5,  title: 'Viral Lucu #5',          category: 'viral',    rating: 4.5, emoji: '😂' },
+      { id: 6,  title: 'Trending Dance #6',      category: 'trending', rating: 4.8, emoji: '💃' },
+      { id: 7,  title: 'Live Konser #7',         category: 'live',     rating: 5.0, emoji: '🎤' },
+      { id: 8,  title: 'Populer Hits #8',        category: 'populer',  rating: 4.6, emoji: '🎵' },
+      { id: 9,  title: 'Viral Challenge #9',     category: 'viral',    rating: 4.4, emoji: '🏆' },
+      { id: 10, title: 'Trending Food #10',      category: 'trending', rating: 4.7, emoji: '🍜' },
+      { id: 11, title: 'Live Gaming #11',        category: 'live',     rating: 4.9, emoji: '🎮' },
+      { id: 12, title: 'Populer Travel #12',     category: 'populer',  rating: 4.8, emoji: '✈️' },
+      { id: 13, title: 'Viral Hewan #13',        category: 'viral',    rating: 4.6, emoji: '🐱' },
+      { id: 14, title: 'Trending Musik #14',     category: 'trending', rating: 4.5, emoji: '🎸' },
+      { id: 15, title: 'Live Olahraga #15',      category: 'live',     rating: 4.7, emoji: '⚽' },
+      { id: 16, title: 'Populer Edukasi #16',    category: 'populer',  rating: 4.9, emoji: '📚' },
+      { id: 17, title: 'Viral Komedi #17',       category: 'viral',    rating: 4.8, emoji: '🤣' },
+      { id: 18, title: 'Trending Fashion #18',   category: 'trending', rating: 4.4, emoji: '👗' },
+      { id: 19, title: 'Live Podcast #19',       category: 'live',     rating: 4.6, emoji: '🎙️' },
+      { id: 20, title: 'Populer Teknologi #20',  category: 'populer',  rating: 4.7, emoji: '💻' },
+    ];
+
+    // ==================== TOAST ====================
+    function showToast(message, type = 'success') {
+      toast.textContent = message;
+      toast.className = 'toast show ' + type;
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // ==================== RENDER GRID ====================
+    function renderGrid() {
+      const filtered = CATALOG.filter(item => {
+        const matchFilter = currentFilter === 'all' || item.category === currentFilter;
+        const matchSearch = item.title.toLowerCase().includes(currentSearch.toLowerCase());
+        return matchFilter && matchSearch;
+      });
+
+      filmGrid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        filmGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">🔍</div>
+            <h3>Tidak ada hasil</h3>
+            <p>Coba kata kunci atau filter lain</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.id = item.id;
+
+        const isLive = item.category === 'live';
+
+        card.innerHTML = `
+          <div class="card-thumb">
+            <span>${item.emoji}</span>
+            <div class="card-badge ${isLive ? 'live' : ''}">
+              ${isLive ? '● LIVE' : item.category}
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-title">${item.title}</div>
+            <div class="card-meta">
+              <span>#${item.id}</span>
+              <span class="rating">★ ${item.rating}</span>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => openVideo(item));
+        filmGrid.appendChild(card);
+      });
+    }
+
+    // ==================== FETCH VIDEO ====================
+    async function fetchVideoUrl() {
+      const res = await fetch('/api/video', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+
+      if (!data.status || !data.Url_Videos) {
+        throw new Error(data.msg || 'Video tidak ditemukan');
+      }
+
+      return data.Url_Videos;
+    }
+
+    // ==================== MODAL ====================
+    function openModal() {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+      modalVideo.pause();
+      modalVideo.src = '';
+      modalVideo.style.display = 'none';
+      modalLoading.style.display = 'flex';
+      modalError.classList.remove('show');
+      currentUrl = '';
+    }
+
+    function showModalLoading() {
+      modalLoading.style.display = 'flex';
+      modalError.classList.remove('show');
+      modalVideo.style.display = 'none';
+    }
+
+    function showModalError(msg) {
+      modalLoading.style.display = 'none';
+      modalError.classList.add('show');
+      modalErrorMsg.textContent = msg || 'Gagal memuat video';
+      modalVideo.style.display = 'none';
+    }
+
+    function showModalVideo(url) {
+      modalLoading.style.display = 'none';
+      modalError.classList.remove('show');
+      modalVideo.style.display = 'block';
+      modalVideo.src = url;
+      modalVideo.load();
+      modalVideo.play().catch(() => {});
+    }
+
+    async function loadVideoIntoSelf() {
+      if (isFetching) return;
+      isFetching = true;
+      btnPlayAgain.disabled = true;
+
+      showModalLoading();
+
+      try {
+        const url = await fetchVideoUrl();
+        currentUrl = url;
+        showModalVideo(url);
+      } catch (err) {
+        console.error(err);
+        showModalError(err.message || 'Gagal memuat video');
+      } finally {
+        isFetching = false;
+        btnPlayAgain.disabled = false;
+      }
+    }
+
+    async function openVideo(item) {
+      modalTitle.textContent = item.title;
+      openModal();
+      await loadVideoIntoSelf();
+    }
+
+    // ==================== COPY URL ====================
+    async function copyUrl() {
+      if (!currentUrl) {
+        showToast('⚠️ Belum ada URL untuk di-copy', 'error');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        showToast('📋 URL berhasil di-copy!', 'success');
+      } catch {
+        const textarea = document.createElement('textarea');
+        textarea.value = currentUrl;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('📋 URL berhasil di-copy!', 'success');
+      }
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value;
+      renderGrid();
+    });
+
+    filterChips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+
+      currentFilter = chip.dataset.filter;
+      renderGrid();
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModal();
+      }
+    });
+
+    btnPlayAgain.addEventListener('click', loadVideoIntoSelf);
+    btnCopyModal.addEventListener('click', copyUrl);
+
+    // ==================== INIT ====================
+    renderGrid();
+  </script>
+</body>
+</html>
