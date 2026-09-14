@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player - Viral & Trending</title>
+  <title>Video Nsfw Premium</title>
   <meta name="description" content="Nonton video viral, trending, live, dan populer">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
   <style>
@@ -34,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ==================== HEADER ==================== */
     header {
       position: sticky;
       top: 0;
@@ -46,7 +45,7 @@
       padding: 1rem 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
     }
 
     .logo {
@@ -74,29 +73,6 @@
       color: var(--accent);
     }
 
-    .nav-links {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text-primary);
-      background: var(--bg-secondary);
-    }
-
-    /* ==================== MAIN ==================== */
     main {
       max-width: 900px;
       margin: 0 auto;
@@ -119,7 +95,6 @@
       font-size: 0.95rem;
     }
 
-    /* ==================== VIDEO CONTAINER ==================== */
     .video-container {
       position: relative;
       background: var(--bg-card);
@@ -140,7 +115,6 @@
       display: block;
     }
 
-    /* Loading State */
     .loading {
       position: absolute;
       inset: 0;
@@ -171,7 +145,6 @@
       font-size: 0.9rem;
     }
 
-    /* Error State */
     .error-state {
       position: absolute;
       inset: 0;
@@ -205,7 +178,6 @@
       max-width: 300px;
     }
 
-    /* ==================== CONTROLS ==================== */
     .controls {
       display: flex;
       gap: 0.75rem;
@@ -261,7 +233,6 @@
       cursor: not-allowed;
     }
 
-    /* ==================== INFO PANEL ==================== */
     .info-panel {
       margin-top: 1.5rem;
       background: var(--bg-card);
@@ -295,7 +266,6 @@
       font-style: italic;
     }
 
-    /* ==================== FOOTER ==================== */
     footer {
       text-align: center;
       padding: 2rem 1.5rem;
@@ -309,19 +279,16 @@
       color: var(--accent);
     }
 
-    /* ==================== RESPONSIVE ==================== */
     @media (max-width: 640px) {
       header { padding: 0.85rem 1rem; }
-      .logo { font-size: 1.1rem; }
+      .logo { font-size: 1rem; }
       .logo-icon { width: 32px; height: 32px; }
-      .nav-links a { padding: 0.4rem 0.75rem; font-size: 0.85rem; }
       main { padding: 1rem; }
       .page-title h1 { font-size: 1.5rem; }
       .video-container { border-radius: 12px; }
       .btn { padding: 0.8rem 1rem; font-size: 0.9rem; }
     }
 
-    /* ==================== TOAST ==================== */
     .toast {
       position: fixed;
       bottom: 2rem;
@@ -352,41 +319,31 @@
 </head>
 <body>
 
-  <!-- ==================== HEADER ==================== -->
   <header>
     <div class="logo">
       <div class="logo-icon">🎬</div>
-      <div class="logo-text">Vid<span>Play</span></div>
+      <div class="logo-text">Video <span>Nsfw</span> Premium</div>
     </div>
-    <nav class="nav-links">
-      <a href="/" class="active">Home</a>
-      <a href="/film">Film</a>
-    </nav>
   </header>
 
-  <!-- ==================== MAIN ==================== -->
   <main>
     <div class="page-title">
       <h1>Video Player</h1>
       <p>Nonton video viral, trending, live & populer</p>
     </div>
 
-    <!-- Video Container -->
     <div class="video-container">
-      <!-- Loading -->
       <div class="loading" id="loading">
         <div class="spinner"></div>
-        <p>Memuat video...</p>
+        <p id="loadingText">Memuat video...</p>
       </div>
 
-      <!-- Error -->
       <div class="error-state" id="errorState">
         <div class="error-icon">😕</div>
         <h3>Gagal Memuat Video</h3>
         <p id="errorMsg">Terjadi kesalahan saat mengambil video.</p>
       </div>
 
-      <!-- Video -->
       <video
         id="videoPlayer"
         controls
@@ -397,7 +354,6 @@
       ></video>
     </div>
 
-    <!-- Controls -->
     <div class="controls">
       <button class="btn btn-primary" id="btnRandom">
         🎲 <span>Video Random</span>
@@ -407,26 +363,22 @@
       </button>
     </div>
 
-    <!-- Info Panel -->
     <div class="info-panel">
       <h3>URL Video</h3>
       <div class="url-box empty" id="urlBox">Belum ada video yang dimuat</div>
     </div>
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
   <footer>
-    © 2025 <span>VidPlay</span> — All rights reserved
+    © 2025 <span>Video Nsfw Premium</span> — All rights reserved
   </footer>
 
-  <!-- ==================== TOAST ==================== -->
   <div class="toast" id="toast"></div>
 
-  <!-- ==================== SCRIPT ==================== -->
   <script>
-    // ==================== ELEMENTS ====================
     const videoPlayer = document.getElementById('videoPlayer');
     const loading     = document.getElementById('loading');
+    const loadingText = document.getElementById('loadingText');
     const errorState  = document.getElementById('errorState');
     const errorMsg    = document.getElementById('errorMsg');
     const urlBox      = document.getElementById('urlBox');
@@ -436,7 +388,17 @@
 
     let currentUrl = '';
 
-    // ==================== TOAST ====================
+    const PROXIES = [
+      {
+        name: 'rifkyshre',
+        build: (url) => `https://cors.rifkyshre.biz.id/${url}`
+      },
+      {
+        name: 'uncors',
+        build: (url) => `https://uncors.netlify.app/?destination=${encodeURIComponent(url)}`
+      }
+    ];
+
     function showToast(message, type = 'success') {
       toast.textContent = message;
       toast.className = 'toast show ' + type;
@@ -446,9 +408,9 @@
       }, 2500);
     }
 
-    // ==================== UI STATE ====================
-    function showLoading() {
+    function showLoading(text = 'Memuat video...') {
       loading.style.display = 'flex';
+      loadingText.textContent = text;
       errorState.classList.remove('show');
       videoPlayer.style.display = 'none';
     }
@@ -466,82 +428,162 @@
       videoPlayer.style.display = 'block';
       videoPlayer.src = url;
       videoPlayer.load();
-      videoPlayer.play().catch(() => {
-        // Autoplay diblokir browser, user harus klik play manual
-      });
+      videoPlayer.play().catch(() => {});
     }
 
-    // ==================== FETCH VIDEO ====================
+    function generateRandomString(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    async function fetchWithFallback(targetUrl) {
+      let lastError = null;
+
+      for (let i = 0; i < PROXIES.length; i++) {
+        const proxy = PROXIES[i];
+        const proxyUrl = proxy.build(targetUrl);
+        try {
+          showLoading(`Mencoba proxy ${proxy.name}...`);
+          console.log(`[Proxy ${i + 1}/${PROXIES.length}] ${proxy.name} → ${proxyUrl}`);
+
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+          const res = await fetch(proxyUrl, {
+            method: 'GET',
+            signal: controller.signal,
+            headers: {
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            }
+          });
+
+          clearTimeout(timeoutId);
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
+
+          const html = await res.text();
+          console.log(`[Proxy ${proxy.name}] Berhasil (${html.length} bytes)`);
+          return html;
+
+        } catch (err) {
+          console.warn(`[Proxy ${proxy.name}] Gagal:`, err.message);
+          lastError = err;
+        }
+      }
+
+      throw new Error('Semua proxy gagal. Coba lagi nanti.');
+    }
+
+    function extractVideoUrl(html) {
+      let videoUrl = null;
+
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        const sources = doc.querySelectorAll('source');
+        for (const s of sources) {
+          const src = s.getAttribute('src');
+          if (src && /\.mp4/i.test(src)) { videoUrl = src; break; }
+        }
+
+        if (!videoUrl) {
+          const videos = doc.querySelectorAll('video');
+          for (const v of videos) {
+            const src = v.getAttribute('src');
+            if (src && /\.mp4/i.test(src)) { videoUrl = src; break; }
+          }
+        }
+      } catch (e) {
+        console.warn('DOMParser gagal, fallback ke regex');
+      }
+
+      if (!videoUrl) {
+        const match = html.match(/<source[^>]+src=["']([^"']+\.mp4)["']/i)
+                   || html.match(/<video[^>]+src=["']([^"']+\.mp4)["']/i)
+                   || html.match(/["'](https?:\/\/[^"']+\.mp4)["']/i);
+        if (match) videoUrl = match[1];
+      }
+
+      return videoUrl;
+    }
+
     async function fetchVideo() {
-      showLoading();
       btnRandom.disabled = true;
+      btnCopy.disabled = true;
+      showLoading('Menyiapkan...');
       urlBox.textContent = 'Memuat...';
       urlBox.classList.remove('empty');
 
       try {
-        const res = await fetch('/api/video', {
-          method: 'GET',
-          headers: { 'Accept': 'application/json' }
-        });
+        const urlList = [
+          'https://viday.uk/v/viral',
+          'https://viday.uk/v/trending',
+          'https://viday.uk/v/live',
+          'https://viday.uk/v/populer'
+        ];
 
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
+        const base = urlList[Math.floor(Math.random() * urlList.length)];
+        const id = generateRandomString(10);
+        const targetUrl = `${base}=${id}`;
+
+        console.log('Target:', targetUrl);
+
+        const html = await fetchWithFallback(targetUrl);
+        const videoUrl = extractVideoUrl(html);
+
+        if (!videoUrl) {
+          throw new Error('Video URL tidak ditemukan di halaman');
         }
 
-        const data = await res.json();
-
-        if (!data.status || !data.Url_Videos) {
-          showError(data.msg || 'Video tidak ditemukan');
-          urlBox.textContent = data.msg || 'Video tidak ditemukan';
-          urlBox.classList.add('empty');
-          return;
-        }
-
-        currentUrl = data.Url_Videos;
+        currentUrl = videoUrl;
         urlBox.textContent = currentUrl;
         urlBox.classList.remove('empty');
 
         showVideo(currentUrl);
-        showToast('✅ Video berhasil dimuat', 'success');
+        showToast('Video berhasil dimuat', 'success');
 
       } catch (err) {
         console.error('Fetch error:', err);
-        showError('Gagal terhubung ke server. Coba lagi.');
+        showError(err.message || 'Gagal memuat video.');
         urlBox.textContent = 'Gagal memuat';
         urlBox.classList.add('empty');
-        showToast('❌ ' + err.message, 'error');
+        showToast(err.message, 'error');
       } finally {
         btnRandom.disabled = false;
+        btnCopy.disabled = false;
       }
     }
 
-    // ==================== COPY URL ====================
     async function copyUrl() {
       if (!currentUrl) {
-        showToast('⚠️ Belum ada URL untuk di-copy', 'error');
+        showToast('Belum ada URL untuk di-copy', 'error');
         return;
       }
 
       try {
         await navigator.clipboard.writeText(currentUrl);
-        showToast('📋 URL berhasil di-copy!', 'success');
+        showToast('URL berhasil di-copy!', 'success');
       } catch {
-        // Fallback untuk browser lama
         const textarea = document.createElement('textarea');
         textarea.value = currentUrl;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        showToast('📋 URL berhasil di-copy!', 'success');
+        showToast('URL berhasil di-copy!', 'success');
       }
     }
 
-    // ==================== EVENT LISTENERS ====================
     btnRandom.addEventListener('click', fetchVideo);
     btnCopy.addEventListener('click', copyUrl);
 
-    // Auto load saat halaman dibuka
     window.addEventListener('DOMContentLoaded', fetchVideo);
   </script>
 </body>

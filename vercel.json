@@ -2,15 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/*.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "film.html",
       "use": "@vercel/static"
     },
     {
@@ -24,16 +16,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/app.py"
-    },
-    {
       "src": "/",
       "dest": "index.html"
-    },
-    {
-      "src": "/film",
-      "dest": "film.html"
     },
     {
       "src": "/404",
