@@ -6,16 +6,11 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-
-# ==================== HELPER ====================
 def generate_random_string(length=10):
-    """Generate random string dengan huruf dan angka."""
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
 
-
 def get_video_url():
-    """Ambil URL video dari viday.uk."""
     try:
         url_list = [
             "https://viday.uk/v/viral",
@@ -56,25 +51,17 @@ def get_video_url():
     except Exception as e:
         return {"status": False, "msg": str(e)}
 
-
-# ==================== ROUTES ====================
 @app.route('/api/video', methods=['GET'])
 def api_video():
-    """Endpoint untuk mengambil URL video."""
     result = get_video_url()
     return jsonify(result)
 
-
 @app.route('/api/health', methods=['GET'])
 def health():
-    """Health check endpoint."""
     return jsonify({"status": True, "msg": "OK"}), 200
 
-
-# ==================== ERROR HANDLERS ====================
 @app.errorhandler(404)
 def not_found(error):
-    """Handler untuk 404 Not Found."""
     return jsonify({
         "status": False,
         "error": "Not Found",
@@ -82,10 +69,8 @@ def not_found(error):
         "msg": f"Endpoint '{request.path}' tidak ditemukan"
     }), 404
 
-
 @app.errorhandler(405)
 def method_not_allowed(error):
-    """Handler untuk 405 Method Not Allowed."""
     return jsonify({
         "status": False,
         "error": "Method Not Allowed",
@@ -93,10 +78,8 @@ def method_not_allowed(error):
         "msg": f"Method '{request.method}' tidak diizinkan untuk '{request.path}'"
     }), 405
 
-
 @app.errorhandler(500)
 def internal_error(error):
-    """Handler untuk 500 Internal Server Error."""
     return jsonify({
         "status": False,
         "error": "Internal Server Error",
@@ -104,10 +87,8 @@ def internal_error(error):
         "msg": "Terjadi kesalahan pada server"
     }), 500
 
-
 @app.errorhandler(Exception)
 def handle_exception(e):
-    """Handler untuk semua exception yang tidak tertangani."""
     return jsonify({
         "status": False,
         "error": "Internal Server Error",
@@ -115,7 +96,5 @@ def handle_exception(e):
         "msg": str(e)
     }), 500
 
-
-# ==================== MAIN ====================
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
