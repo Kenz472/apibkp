@@ -3,446 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Nsfw Premium</title>
-    <meta name="description" content="Nonton video viral, trending, live, dan populer">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <title>🔞 Premium 18+ — Video Player</title>
+    <meta name="description" content="Nonton video viral, trending, live, dan populer — khusus 18+">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔞</text></svg>">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         :root {
-            --bg-primary: #08080c;
-            --bg-secondary: #0f0f16;
-            --bg-card: rgba(22, 22, 32, 0.7);
-            --bg-glass: rgba(22, 22, 32, 0.55);
+            --bg-primary: #08060a;
+            --bg-secondary: #120d14;
+            --bg-card: #1a121d;
             --accent: #ff2d55;
-            --accent-2: #ff6b7a;
-            --accent-3: #ff9a3c;
-            --purple: #7c3aed;
+            --accent-2: #ff6b35;
+            --accent-glow: rgba(255,45,85,0.45);
             --text-primary: #ffffff;
-            --text-secondary: #9a9ab0;
-            --border: rgba(255, 255, 255, 0.08);
+            --text-secondary: #9a8fa3;
+            --border: #2a1f2e;
             --success: #2ed573;
-            --glow: 0 0 40px rgba(255, 45, 85, 0.35);
         }
-
-        html, body {
-            min-height: 100%;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
-
-        body.locked {
-            overflow: hidden;
-        }
-
-        .bg-mesh {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .bg-mesh::before,
-        .bg-mesh::after {
+        body::before {
             content: '';
-            position: absolute;
-            width: 60vmax;
-            height: 60vmax;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.35;
-        }
-
-        .bg-mesh::before {
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            top: -20vmax;
-            left: -15vmax;
-            animation: floatA 18s ease-in-out infinite;
-        }
-
-        .bg-mesh::after {
-            background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
-            bottom: -25vmax;
-            right: -15vmax;
-            animation: floatB 22s ease-in-out infinite;
-        }
-
-        @keyframes floatA {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(8vmax, 6vmax) scale(1.15); }
-        }
-
-        @keyframes floatB {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-6vmax, -8vmax) scale(1.2); }
-        }
-
-        .particles {
             position: fixed;
             inset: 0;
-            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 10%, rgba(255,45,85,0.15), transparent 45%),
+                radial-gradient(circle at 80% 90%, rgba(255,107,53,0.12), transparent 45%);
             pointer-events: none;
-            overflow: hidden;
+            z-index: 0;
         }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--accent-2);
-            opacity: 0;
-            animation: rise linear infinite;
-        }
-
-        @keyframes rise {
-            0% { opacity: 0; transform: translateY(0) scale(0.5); }
-            20% { opacity: 0.6; }
-            100% { opacity: 0; transform: translateY(-100vh) scale(1.2); }
-        }
-
         header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--bg-glass);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            background: rgba(8,6,10,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 1.5rem;
+            padding: 0.85rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 0.7rem;
             font-size: 1.25rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
         }
-
         .logo-icon {
             width: 42px;
             height: 42px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
-            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 0 25px rgba(255, 45, 85, 0.6), inset 0 1px 0 rgba(255,255,255,0.3);
-            animation: pulseGlow 3s ease-in-out infinite;
+            font-size: 1.35rem;
+            box-shadow: 0 0 24px var(--accent-glow);
+            animation: logoPulse 2.4s ease-in-out infinite;
         }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 25px rgba(255, 45, 85, 0.6), inset 0 1px 0 rgba(255,255,255,0.3); }
-            50% { box-shadow: 0 0 45px rgba(255, 45, 85, 0.9), inset 0 1px 0 rgba(255,255,255,0.3); }
+        @keyframes logoPulse {
+            0%, 100% { box-shadow: 0 0 20px var(--accent-glow); transform: scale(1); }
+            50% { box-shadow: 0 0 36px var(--accent-glow); transform: scale(1.04); }
         }
-
-        .logo-text span {
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
+        .logo-text span { color: var(--accent); }
         main {
             max-width: 920px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem;
             position: relative;
+            z-index: 1;
         }
-
-        .page-title {
-            margin-bottom: 1.75rem;
+        .hero {
             text-align: center;
+            margin-bottom: 1.6rem;
         }
-
-        .badge {
+        .age-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            background: rgba(255, 45, 85, 0.12);
-            border: 1px solid rgba(255, 45, 85, 0.35);
-            color: var(--accent-2);
-            padding: 0.35rem 0.9rem;
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 0.9rem;
-        }
-
-        .badge .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-            animation: blink 1.5s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.25; }
-        }
-
-        .page-title h1 {
-            font-size: 2rem;
+            gap: 0.45rem;
+            background: linear-gradient(135deg, rgba(255,45,85,0.18), rgba(255,107,53,0.18));
+            border: 1px solid rgba(255,45,85,0.4);
+            color: var(--accent);
+            padding: 0.4rem 0.95rem;
+            border-radius: 30px;
+            font-size: 0.78rem;
             font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 0.4rem;
-            background: linear-gradient(180deg, #fff 30%, #b8b8cc);
+            letter-spacing: 1.5px;
+            margin-bottom: 0.9rem;
+            text-transform: uppercase;
+            animation: badgeGlow 2.8s ease-in-out infinite;
+        }
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(255,45,85,0); }
+            50% { box-shadow: 0 0 18px rgba(255,45,85,0.35); }
+        }
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.8px;
+            margin-bottom: 0.5rem;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #fff 25%, var(--accent) 75%, var(--accent-2));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .page-title p {
+        .hero p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
         }
+        .warning-bar {
+            margin-top: 1.1rem;
+            background: linear-gradient(135deg, rgba(255,45,85,0.08), rgba(255,107,53,0.06));
+            border: 1px solid rgba(255,45,85,0.25);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+            color: #ffb3c1;
+        }
+        .warning-bar .icon { font-size: 1.2rem; flex-shrink: 0; }
 
-        .video-wrapper {
+        .stage {
             position: relative;
-            padding: 6px;
-            border-radius: 22px;
-            background: linear-gradient(135deg, rgba(255,45,85,0.5), rgba(124,58,237,0.4), rgba(255,154,60,0.4));
-            background-size: 200% 200%;
-            animation: borderFlow 6s linear infinite;
-            box-shadow: var(--glow);
+            margin: 0 auto;
+            max-width: 920px;
+            display: flex;
+            justify-content: center;
         }
-
-        @keyframes borderFlow {
+        .video-frame {
+            position: relative;
+            padding: 10px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent));
+            background-size: 300% 300%;
+            animation: frameShift 6s ease infinite;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.06),
+                0 24px 70px rgba(0,0,0,0.7),
+                0 0 60px rgba(255,45,85,0.18);
+            display: none;
+            width: auto;
+            max-width: 100%;
+        }
+        .video-frame.show {
+            display: inline-block;
+            animation: frameShift 6s ease infinite, frameIn 0.55s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes frameShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
-        .video-container {
+        @keyframes frameIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .video-frame::before,
+        .video-frame::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 3px solid #fff;
+            border-radius: 4px;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+        .video-frame::before {
+            top: -6px;
+            left: -6px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 12px;
+        }
+        .video-frame::after {
+            bottom: -6px;
+            right: -6px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 12px;
+        }
+        .corner-tl,
+        .corner-br {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 3px solid #fff;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .corner-tl {
+            top: -6px;
+            right: -6px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 12px;
+        }
+        .corner-br {
+            bottom: -6px;
+            left: -6px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 12px;
+        }
+        .video-inner {
             position: relative;
             background: #000;
-            border-radius: 17px;
+            border-radius: 16px;
             overflow: hidden;
-            aspect-ratio: 9 / 16;
-            max-height: 78vh;
+            border: 1px solid rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 80vh;
+            width: fit-content;
+            max-width: 100%;
             margin: 0 auto;
         }
-
-        .video-container video {
-            width: 100%;
-            height: 100%;
+        .video-inner video {
+            display: block;
+            max-width: 100%;
+            max-height: 80vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
             background: #000;
-            display: block;
         }
+        .frame-label {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            z-index: 5;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .placeholder {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 9/16;
+            max-height: 78vh;
+            border-radius: 24px;
+            border: 2px dashed rgba(255,45,85,0.35);
+            background:
+                radial-gradient(circle at 50% 40%, rgba(255,45,85,0.08), transparent 60%),
+                var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+        .placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 20px,
+                rgba(255,45,85,0.03) 20px,
+                rgba(255,45,85,0.03) 40px
+            );
+            pointer-events: none;
+        }
+        .placeholder-icon {
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .placeholder h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+        }
+        .placeholder p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            max-width: 300px;
+            line-height: 1.55;
+        }
+        .placeholder .hint {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: blink 1.6s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
         .loading {
             position: absolute;
-            inset: 0;
+            inset: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background: var(--bg-card);
-            gap: 1.2rem;
+            border-radius: 16px;
+            gap: 1.1rem;
             z-index: 10;
-            overflow: hidden;
+            min-width: 280px;
+            min-height: 280px;
         }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%);
-            animation: shimmer 1.6s linear infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .spinner-ring {
+        .spinner {
             width: 56px;
             height: 56px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.08);
+            border: 4px solid var(--border);
             border-top-color: var(--accent);
-            border-right-color: var(--accent-3);
-            animation: spin 0.9s linear infinite;
-            position: relative;
-        }
-
-        .spinner-ring::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
+            border-right-color: var(--accent-2);
             border-radius: 50%;
-            border: 2px solid transparent;
-            border-bottom-color: var(--purple);
-            animation: spin 1.4s linear infinite reverse;
+            animation: spin 0.75s linear infinite;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
+        @keyframes spin { to { transform: rotate(360deg); } }
         .loading p {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            font-weight: 500;
-            z-index: 1;
+            animation: blink 1.4s ease-in-out infinite;
         }
-
         .error-state {
             position: absolute;
-            inset: 0;
+            inset: 10px;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background: var(--bg-card);
+            border-radius: 16px;
             gap: 1rem;
             padding: 2rem;
             text-align: center;
             z-index: 10;
+            min-width: 280px;
+            min-height: 280px;
         }
-
-        .error-state.show {
-            display: flex;
-            animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .error-state.show { display: flex; }
+        .error-icon { font-size: 3.2rem; animation: shake 0.5s ease; }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .error-icon {
-            font-size: 3.5rem;
-            filter: drop-shadow(0 0 20px rgba(255,45,85,0.5));
-        }
-
-        .error-state h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
-
-        .error-state p {
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            max-width: 300px;
-            line-height: 1.6;
-        }
-
-        .v-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2.5rem 0.9rem 0.85rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.92), transparent);
-            display: none;
-            flex-direction: column;
-            gap: 0.55rem;
-            z-index: 5;
-        }
-
-        .v-controls.show {
-            display: flex;
-        }
-
-        .progress {
-            height: 5px;
-            border-radius: 99px;
-            background: rgba(255,255,255,0.18);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-3));
-            border-radius: 99px;
-            transition: width 0.1s linear;
-        }
-
-        .v-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .v-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.15rem;
-            cursor: pointer;
-            padding: 0.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.15s, opacity 0.15s;
-            opacity: 0.85;
-            font-family: inherit;
-        }
-
-        .v-btn:hover {
-            transform: scale(1.15);
-            opacity: 1;
-        }
-
-        .v-time {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.85);
-            font-variant-numeric: tabular-nums;
-            margin-left: auto;
-            letter-spacing: 0.5px;
-        }
-
-        .v-speed {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            border-radius: 6px;
-            padding: 0.25rem 0.4rem;
-            font-size: 0.72rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-        }
+        .error-state h3 { font-size: 1.2rem; font-weight: 700; }
+        .error-state p { color: var(--text-secondary); font-size: 0.9rem; max-width: 300px; }
 
         .controls {
             display: flex;
-            gap: 0.85rem;
-            margin-top: 1.75rem;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
         .btn {
             flex: 1;
-            min-width: 150px;
-            padding: 1rem 1.5rem;
+            min-width: 140px;
+            padding: 0.95rem 1.5rem;
             border: none;
             border-radius: 14px;
             font-size: 0.95rem;
@@ -451,497 +403,207 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.55rem;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            gap: 0.5rem;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
             font-family: inherit;
+            letter-spacing: 0.2px;
             position: relative;
             overflow: hidden;
         }
-
         .btn::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.25);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.5s, height 0.5s;
         }
-
-        .btn:hover::before {
-            transform: translateX(100%);
-        }
-
+        .btn:active::before { width: 300px; height: 300px; }
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
             color: white;
-            box-shadow: 0 6px 25px rgba(255, 45, 85, 0.45);
+            box-shadow: 0 6px 22px var(--accent-glow);
         }
-
         .btn-primary:hover:not(:disabled) {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(255, 45, 85, 0.65);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255,45,85,0.6);
         }
-
-        .btn-primary:active:not(:disabled) {
-            transform: translateY(-1px) scale(0.99);
-        }
-
+        .btn-primary:active:not(:disabled) { transform: translateY(-1px); }
         .btn-secondary {
             background: var(--bg-card);
             color: var(--text-primary);
             border: 1px solid var(--border);
-            backdrop-filter: blur(12px);
         }
-
         .btn-secondary:hover:not(:disabled) {
             background: var(--bg-secondary);
-            border-color: rgba(255, 45, 85, 0.4);
-            transform: translateY(-3px);
+            border-color: var(--accent);
+            color: var(--accent);
         }
-
-        .btn:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn .emoji { font-size: 1.15rem; }
 
         .info-panel {
-            margin-top: 1.75rem;
+            margin-top: 1.5rem;
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.3rem;
-            transition: border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .info-panel:hover {
-            border-color: rgba(255, 45, 85, 0.25);
+        .info-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
         }
-
-        .info-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
         .info-panel h3 {
             font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--text-secondary);
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
         }
-
-        .meta-stats {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.72rem;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.04);
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .stat b {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
         .url-box {
-            background: rgba(0,0,0,0.35);
+            background: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 0.85rem;
             font-family: 'Courier New', monospace;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--success);
             word-break: break-all;
-            line-height: 1.6;
-            max-height: 90px;
-            overflow-y: auto;
+            line-height: 1.55;
         }
-
-        .url-box.empty {
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-
+        .url-box.empty { color: var(--text-secondary); font-style: italic; }
         footer {
             text-align: center;
-            padding: 2.5rem 1.5rem;
+            padding: 2.2rem 1.5rem;
             color: var(--text-secondary);
             font-size: 0.85rem;
             border-top: 1px solid var(--border);
             margin-top: 3rem;
             position: relative;
+            z-index: 1;
         }
-
-        footer span {
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
+        footer span { color: var(--accent); font-weight: 600; }
+        @media (max-width: 640px) {
+            header { padding: 0.8rem 1rem; }
+            .logo { font-size: 1rem; }
+            .logo-icon { width: 36px; height: 36px; font-size: 1.15rem; }
+            main { padding: 1rem; }
+            .hero h1 { font-size: 1.6rem; }
+            .hero p { font-size: 0.85rem; }
+            .video-frame { padding: 7px; border-radius: 18px; }
+            .video-inner { border-radius: 12px; }
+            .btn { padding: 0.85rem 1rem; font-size: 0.9rem; }
+            .placeholder { border-radius: 18px; }
         }
-
         .toast {
             position: fixed;
             bottom: 2rem;
             left: 50%;
-            transform: translateX(-50%) translateY(120px) scale(0.9);
-            background: var(--bg-card);
+            transform: translateX(-50%) translateY(120px);
+            background: rgba(26,18,29,0.98);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 0.9rem 1.6rem;
+            padding: 0.95rem 1.6rem;
             border-radius: 14px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.7);
             opacity: 0;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
             z-index: 1000;
             pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            max-width: calc(100vw - 2rem);
+            max-width: 90vw;
         }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0) scale(1);
-            opacity: 1;
-        }
-
-        .toast.success { border-color: rgba(46, 213, 115, 0.5); }
-        .toast.error   { border-color: rgba(255, 45, 85, 0.5); }
-        .toast-icon { font-size: 1.1rem; }
-
-        .age-gate {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            background: rgba(5, 5, 10, 0.75);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-        .age-gate.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .age-card {
-            position: relative;
-            width: 100%;
-            max-width: 440px;
-            background: linear-gradient(160deg, rgba(30, 30, 45, 0.95), rgba(15, 15, 25, 0.98));
-            border: 1px solid rgba(255, 45, 85, 0.35);
-            border-radius: 24px;
-            padding: 2.5rem 2rem 2rem;
-            text-align: center;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 45, 85, 0.2);
-            transform: scale(0.85) translateY(20px);
-            opacity: 0;
-            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-            overflow: hidden;
-        }
-
-        .age-gate.show .age-card {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        .age-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,45,85,0.15), transparent, rgba(124,58,237,0.15), transparent);
-            animation: rotateGlow 8s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes rotateGlow {
-            to { transform: rotate(360deg); }
-        }
-
-        .age-icon {
-            position: relative;
-            width: 84px;
-            height: 84px;
-            margin: 0 auto 1.25rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.4rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
-            box-shadow: 0 0 40px rgba(255, 45, 85, 0.6), inset 0 2px 0 rgba(255,255,255,0.3);
-            animation: pulseGlow 2.5s ease-in-out infinite;
-        }
-
-        .age-card h2 {
-            position: relative;
-            font-size: 1.6rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.6rem;
-            background: linear-gradient(180deg, #fff 30%, #b8b8cc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .age-card .age-sub {
-            position: relative;
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            padding: 0 0.25rem;
-        }
-
-        .age-card .age-warn {
-            position: relative;
-            background: rgba(255, 45, 85, 0.08);
-            border: 1px solid rgba(255, 45, 85, 0.3);
-            border-radius: 12px;
-            padding: 0.85rem 1rem;
-            font-size: 0.8rem;
-            color: var(--accent-2);
-            line-height: 1.5;
-            margin-bottom: 1.75rem;
-            text-align: left;
-            display: flex;
-            gap: 0.6rem;
-            align-items: flex-start;
-        }
-
-        .age-warn-icon {
-            flex-shrink: 0;
-            font-size: 1rem;
-            margin-top: 1px;
-        }
-
-        .age-actions {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-        }
-
-        .age-btn {
-            width: 100%;
-            padding: 0.95rem 1.5rem;
-            border: none;
-            border-radius: 13px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .age-btn-yes {
-            background: linear-gradient(135deg, var(--accent), var(--accent-3));
-            color: white;
-            box-shadow: 0 6px 25px rgba(255, 45, 85, 0.45);
-        }
-
-        .age-btn-yes:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(255, 45, 85, 0.65);
-        }
-
-        .age-btn-yes:active {
-            transform: translateY(0) scale(0.99);
-        }
-
-        .age-btn-no {
-            background: rgba(255,255,255,0.06);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .age-btn-no:hover {
-            background: rgba(255,255,255,0.1);
-            color: var(--text-primary);
-            border-color: rgba(255, 45, 85, 0.3);
-        }
-
-        .age-footer {
-            position: relative;
-            margin-top: 1.5rem;
-            font-size: 0.72rem;
-            color: rgba(154, 154, 176, 0.7);
-            line-height: 1.5;
-        }
-
-        .content-blur {
-            filter: blur(12px);
-            pointer-events: none;
-            user-select: none;
-            transition: filter 0.5s ease;
-        }
-
-        .content-unblur {
-            filter: blur(0);
-            pointer-events: auto;
-            user-select: auto;
-            transition: filter 0.6s ease;
-        }
-
-        @media (max-width: 640px) {
-            header { padding: 0.8rem 1rem; }
-            .logo { font-size: 1.02rem; }
-            .logo-icon { width: 36px; height: 36px; font-size: 1.1rem; border-radius: 11px; }
-            main { padding: 1.25rem 1rem; }
-            .page-title h1 { font-size: 1.55rem; }
-            .video-wrapper { padding: 4px; border-radius: 18px; }
-            .video-container { border-radius: 14px; }
-            .btn { padding: 0.9rem 1rem; font-size: 0.88rem; min-width: 130px; }
-            .info-panel { padding: 1rem; }
-            .v-controls { padding: 2rem 0.7rem 0.7rem; }
-            .age-card { padding: 2rem 1.4rem 1.6rem; border-radius: 20px; }
-            .age-card h2 { font-size: 1.35rem; }
-            .age-icon { width: 72px; height: 72px; font-size: 2rem; }
-        }
-
-        .url-box::-webkit-scrollbar { width: 6px; }
-        .url-box::-webkit-scrollbar-thumb {
-            background: rgba(255,45,85,0.4);
-            border-radius: 99px;
-        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); box-shadow: 0 12px 40px rgba(46,213,115,0.25); }
+        .toast.error { border-color: var(--accent); box-shadow: 0 12px 40px rgba(255,45,85,0.25); }
     </style>
 </head>
 <body>
-
-    <div class="bg-mesh"></div>
-    <div class="particles" id="particles"></div>
-
-    <div class="age-gate" id="ageGate">
-        <div class="age-card">
-            <div class="age-icon">🔞</div>
-            <h2>Peringatan Konten Dewasa</h2>
-            <p class="age-sub">
-                Situs ini hanya untuk pengunjung berusia <b>18 tahun ke atas</b>.
-                Dengan masuk, Anda menyatakan telah cukup umur dan menyetujui syarat penggunaan.
-            </p>
-            <div class="age-warn">
-                <span class="age-warn-icon">⚠️</span>
-                <span>Konten berisi materi dewasa. Jika Anda di bawah 18 tahun, harap tutup halaman ini dan keluar.</span>
-            </div>
-            <div class="age-actions">
-                <button class="age-btn age-btn-yes" id="btnAgeYes">✅ Ya, Saya 18+ (Masuk)</button>
-                <button class="age-btn age-btn-no" id="btnAgeNo">🚪 Tidak, Keluar</button>
-            </div>
-            <div class="age-footer">Dengan menekan tombol di atas, Anda menyatakan telah berusia 18+.</div>
-        </div>
-    </div>
-
     <header>
         <div class="logo">
-            <div class="logo-icon">🎬</div>
-            <div class="logo-text">Video <span>Nsfw</span> Premium</div>
+            <div class="logo-icon">🔞</div>
+            <div class="logo-text">Premium <span>18+</span></div>
         </div>
     </header>
 
-    <main id="mainContent" class="content-blur">
-        <div class="page-title">
-            <div class="badge"><span class="dot"></span> Premium Player</div>
-            <h1>Video Player</h1>
-            <p>Nonton video viral, trending, live & populer</p>
+    <main>
+        <div class="hero">
+            <div class="age-badge">🔞 Khusus 18 Tahun Ke Atas</div>
+            <h1>Video Player Premium</h1>
+            <p>Viral • Trending • Live • Populer</p>
+            <div class="warning-bar">
+                <span class="icon">⚠️</span>
+                <span>Konten hanya untuk dewasa. Dengan menonton, Anda menyatakan berusia 18+ dan menyetujui kebijakan konten.</span>
+            </div>
         </div>
 
-        <div class="video-wrapper">
-            <div class="video-container">
-                <div class="loading" id="loading">
-                    <div class="spinner-ring"></div>
-                    <p id="loadingText">Memuat video...</p>
-                </div>
+        <div class="stage">
+            <div class="placeholder" id="placeholder">
+                <div class="placeholder-icon">🎬</div>
+                <h2>Video Belum Ditampilkan</h2>
+                <p>Tekan tombol <strong>Video Random</strong> di bawah untuk menampilkan video dengan bingkai premium.</p>
+                <div class="hint">▼ Klik tombol di bawah ▼</div>
+            </div>
 
+            <div class="video-frame" id="videoFrame">
+                <div class="corner-tl"></div>
+                <div class="corner-br"></div>
+                <div class="video-inner" id="videoInner">
+                    <div class="frame-label" id="frameLabel">🔞 PREMIUM 18+</div>
+                    <video id="videoPlayer" controls playsinline preload="metadata" controlsList="nodownload" style="display:none;"></video>
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p id="loadingText">Menyiapkan player...</p>
+                </div>
                 <div class="error-state" id="errorState">
                     <div class="error-icon">😕</div>
                     <h3>Gagal Memuat Video</h3>
                     <p id="errorMsg">Terjadi kesalahan saat mengambil video.</p>
-                </div>
-
-                <video id="videoPlayer" controls playsinline preload="metadata" controlsList="nodownload" style="display:none;"></video>
-
-                <div class="v-controls" id="vControls">
-                    <div class="progress" id="progress">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="v-row">
-                        <button class="v-btn" id="btnPlay" title="Play/Pause">▶</button>
-                        <button class="v-btn" id="btnMute" title="Mute">🔊</button>
-                        <button class="v-speed" id="btnSpeed" title="Kecepatan">1x</button>
-                        <span class="v-time" id="vTime">0:00 / 0:00</span>
-                        <button class="v-btn" id="btnFull" title="Fullscreen">⛶</button>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="controls">
             <button class="btn btn-primary" id="btnRandom">
-                🎲 <span>Video Random</span>
+                <span class="emoji">🎲</span> <span>Video Random</span>
             </button>
             <button class="btn btn-secondary" id="btnCopy">
-                📋 <span>Copy URL</span>
+                <span class="emoji">📋</span> <span>Copy URL</span>
             </button>
         </div>
 
         <div class="info-panel">
-            <div class="info-header">
-                <h3>🔗 URL Video</h3>
-                <div class="meta-stats" id="metaStats" style="display:none;">
-                    <span class="stat" id="statRes">📺 <b>-</b></span>
-                    <span class="stat" id="statDur">⏱ <b>-</b></span>
-                </div>
-            </div>
+            <h3>🔗 URL Video</h3>
             <div class="url-box empty" id="urlBox">Belum ada video yang dimuat</div>
         </div>
     </main>
 
     <footer>
-        © 2025 <span>Video Nsfw Premium</span> — All rights reserved
+        © 2025 <span>Premium 18+</span> — All rights reserved
     </footer>
 
-    <div class="toast" id="toast">
-        <span class="toast-icon" id="toastIcon">✓</span>
-        <span id="toastMsg"></span>
-    </div>
+    <div class="toast" id="toast"></div>
 
     <script>
         const videoPlayer = document.getElementById('videoPlayer');
@@ -953,56 +615,29 @@
         const btnRandom = document.getElementById('btnRandom');
         const btnCopy = document.getElementById('btnCopy');
         const toast = document.getElementById('toast');
-        const toastIcon = document.getElementById('toastIcon');
-        const toastMsg = document.getElementById('toastMsg');
-
-        const vControls = document.getElementById('vControls');
-        const progress = document.getElementById('progress');
-        const progressFill = document.getElementById('progressFill');
-        const btnPlay = document.getElementById('btnPlay');
-        const btnMute = document.getElementById('btnMute');
-        const btnSpeed = document.getElementById('btnSpeed');
-        const vTime = document.getElementById('vTime');
-        const btnFull = document.getElementById('btnFull');
-        const metaStats = document.getElementById('metaStats');
-        const statRes = document.getElementById('statRes');
-        const statDur = document.getElementById('statDur');
-        const particlesEl = document.getElementById('particles');
-
-        const ageGate = document.getElementById('ageGate');
-        const btnAgeYes = document.getElementById('btnAgeYes');
-        const btnAgeNo = document.getElementById('btnAgeNo');
-        const mainContent = document.getElementById('mainContent');
+        const placeholder = document.getElementById('placeholder');
+        const videoFrame = document.getElementById('videoFrame');
+        const videoInner = document.getElementById('videoInner');
+        const frameLabel = document.getElementById('frameLabel');
 
         let currentUrl = '';
-        let loadCount = 0;
-        let videoStarted = false;
+        let isFetching = false;
 
-        (function spawnParticles() {
-            const count = window.innerWidth < 640 ? 12 : 22;
-            for (let i = 0; i < count; i++) {
-                const p = document.createElement('span');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.bottom = '-10px';
-                p.style.animationDuration = (8 + Math.random() * 12) + 's';
-                p.style.animationDelay = (Math.random() * 10) + 's';
-                p.style.background = Math.random() > 0.5 ? 'var(--accent-2)' : 'var(--purple)';
-                particlesEl.appendChild(p);
+        const PROXIES = [{
+                name: 'rifkyshre',
+                build: (url) => `https://cors.rifkyshre.biz.id/${url}`
+            },
+            {
+                name: 'uncors',
+                build: (url) => `https://uncors.netlify.app/?destination=${encodeURIComponent(url)}`
             }
-        })();
-
-        const PROXIES = [
-            { name: 'rifkyshre', build: (url) => `https://cors.rifkyshre.biz.id/${url}` },
-            { name: 'uncors', build: (url) => `https://uncors.netlify.app/?destination=${encodeURIComponent(url)}` }
         ];
 
         function showToast(message, type = 'success') {
-            toastMsg.textContent = message;
-            toastIcon.textContent = type === 'error' ? '✕' : '✓';
+            toast.textContent = message;
             toast.className = 'toast show ' + type;
             clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.remove('show'), 2800);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         function showLoading(text = 'Memuat video...') {
@@ -1010,7 +645,6 @@
             loadingText.textContent = text;
             errorState.classList.remove('show');
             videoPlayer.style.display = 'none';
-            vControls.classList.remove('show');
         }
 
         function showError(msg) {
@@ -1018,14 +652,37 @@
             errorState.classList.add('show');
             errorMsg.textContent = msg || 'Terjadi kesalahan saat mengambil video.';
             videoPlayer.style.display = 'none';
-            vControls.classList.remove('show');
+        }
+
+        function applyVideoAspect() {
+            const w = videoPlayer.videoWidth;
+            const h = videoPlayer.videoHeight;
+            if (!w || !h) return;
+
+            const maxH = window.innerHeight * 0.8;
+            const maxW = Math.min(window.innerWidth - 80, 880);
+
+            let displayW = w;
+            let displayH = h;
+
+            const scale = Math.min(maxW / w, maxH / h, 1);
+            displayW = Math.round(w * scale);
+            displayH = Math.round(h * scale);
+
+            videoInner.style.width = displayW + 'px';
+            videoInner.style.height = displayH + 'px';
+            videoInner.style.aspectRatio = `${w} / ${h}`;
+
+            const orientation = w > h ? '📺 LANDSCAPE' : (w < h ? '📱 PORTRAIT' : '⬛ SQUARE');
+            frameLabel.textContent = `🔞 PREMIUM 18+ • ${orientation} • ${w}×${h}`;
         }
 
         function showVideo(url) {
             loading.style.display = 'none';
             errorState.classList.remove('show');
+            placeholder.style.display = 'none';
+            videoFrame.classList.add('show');
             videoPlayer.style.display = 'block';
-            vControls.classList.add('show');
             videoPlayer.src = url;
             videoPlayer.load();
             videoPlayer.play().catch(() => {});
@@ -1034,60 +691,81 @@
         function generateRandomString(length) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let result = '';
-            for (let i = 0; i < length; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
             return result;
-        }
-
-        function fmtTime(s) {
-            if (!isFinite(s)) return '0:00';
-            const m = Math.floor(s / 60);
-            const sec = Math.floor(s % 60);
-            return m + ':' + String(sec).padStart(2, '0');
         }
 
         async function fetchWithFallback(targetUrl) {
             let lastError = null;
+
             for (let i = 0; i < PROXIES.length; i++) {
                 const proxy = PROXIES[i];
                 const proxyUrl = proxy.build(targetUrl);
                 try {
                     showLoading(`Mencoba proxy ${proxy.name}...`);
+                    console.log(`[Proxy ${i + 1}/${PROXIES.length}] ${proxy.name} → ${proxyUrl}`);
+
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 25000);
+
                     const res = await fetch(proxyUrl, {
                         method: 'GET',
                         signal: controller.signal,
-                        headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' }
+                        headers: {
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                        }
                     });
+
                     clearTimeout(timeoutId);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+
                     const html = await res.text();
+                    console.log(`[Proxy ${proxy.name}] Berhasil (${html.length} bytes)`);
                     return html;
+
                 } catch (err) {
+                    console.warn(`[Proxy ${proxy.name}] Gagal:`, err.message);
                     lastError = err;
                 }
             }
+
             throw new Error('Semua proxy gagal. Coba lagi nanti.');
         }
 
         function extractVideoUrl(html) {
             let videoUrl = null;
+
             try {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+
                 const sources = doc.querySelectorAll('source');
                 for (const s of sources) {
                     const src = s.getAttribute('src');
-                    if (src && /\.mp4/i.test(src)) { videoUrl = src; break; }
+                    if (src && /\.mp4/i.test(src)) {
+                        videoUrl = src;
+                        break;
+                    }
                 }
+
                 if (!videoUrl) {
                     const videos = doc.querySelectorAll('video');
                     for (const v of videos) {
                         const src = v.getAttribute('src');
-                        if (src && /\.mp4/i.test(src)) { videoUrl = src; break; }
+                        if (src && /\.mp4/i.test(src)) {
+                            videoUrl = src;
+                            break;
+                        }
                     }
                 }
-            } catch (e) { }
+            } catch (e) {
+                console.warn('DOMParser gagal, fallback ke regex');
+            }
 
             if (!videoUrl) {
                 const match = html.match(/<source[^>]+src=["']([^"']+\.mp4)["']/i) ||
@@ -1095,16 +773,23 @@
                     html.match(/["'](https?:\/\/[^"']+\.mp4)["']/i);
                 if (match) videoUrl = match[1];
             }
+
             return videoUrl;
         }
 
         async function fetchVideo() {
+            if (isFetching) return;
+            isFetching = true;
             btnRandom.disabled = true;
             btnCopy.disabled = true;
+            placeholder.style.display = 'none';
+            videoFrame.classList.add('show');
+            videoInner.style.width = '';
+            videoInner.style.height = '';
+            videoInner.style.aspectRatio = '';
             showLoading('Menyiapkan...');
             urlBox.textContent = 'Memuat...';
             urlBox.classList.remove('empty');
-            metaStats.style.display = 'none';
 
             try {
                 const urlList = [
@@ -1113,152 +798,90 @@
                     'https://viday.uk/v/live',
                     'https://viday.uk/v/populer'
                 ];
+
                 const base = urlList[Math.floor(Math.random() * urlList.length)];
                 const id = generateRandomString(10);
                 const targetUrl = `${base}=${id}`;
 
+                console.log('Target:', targetUrl);
+
                 const html = await fetchWithFallback(targetUrl);
                 const videoUrl = extractVideoUrl(html);
 
-                if (!videoUrl) throw new Error('Video URL tidak ditemukan di halaman');
+                if (!videoUrl) {
+                    throw new Error('Video URL tidak ditemukan di halaman');
+                }
 
                 currentUrl = videoUrl;
                 urlBox.textContent = currentUrl;
                 urlBox.classList.remove('empty');
+
                 showVideo(currentUrl);
-                showToast('Video berhasil dimuat', 'success');
-                loadCount++;
+                showToast('🎬 Video berhasil dimuat!', 'success');
+
             } catch (err) {
+                console.error('Fetch error:', err);
                 showError(err.message || 'Gagal memuat video.');
                 urlBox.textContent = 'Gagal memuat';
                 urlBox.classList.add('empty');
-                showToast(err.message, 'error');
+                showToast('❌ ' + err.message, 'error');
             } finally {
+                isFetching = false;
                 btnRandom.disabled = false;
                 btnCopy.disabled = false;
             }
         }
 
         async function copyUrl() {
-            if (!currentUrl) { showToast('Belum ada URL untuk di-copy', 'error'); return; }
+            if (!currentUrl) {
+                showToast('Belum ada URL untuk di-copy', 'error');
+                return;
+            }
+
             try {
                 await navigator.clipboard.writeText(currentUrl);
-                showToast('URL berhasil di-copy!', 'success');
+                showToast('✅ URL berhasil di-copy!', 'success');
             } catch {
-                const ta = document.createElement('textarea');
-                ta.value = currentUrl;
-                document.body.appendChild(ta);
-                ta.select();
+                const textarea = document.createElement('textarea');
+                textarea.value = currentUrl;
+                document.body.appendChild(textarea);
+                textarea.select();
                 document.execCommand('copy');
-                document.body.removeChild(ta);
-                showToast('URL berhasil di-copy!', 'success');
+                document.body.removeChild(textarea);
+                showToast('✅ URL berhasil di-copy!', 'success');
             }
         }
 
-        function openAgeGate() {
-            document.body.classList.add('locked');
-            mainContent.classList.add('content-blur');
-            mainContent.classList.remove('content-unblur');
-            ageGate.classList.add('show');
-        }
+        videoPlayer.addEventListener('loadedmetadata', () => {
+            applyVideoAspect();
+            if (loading.style.display !== 'none') loading.style.display = 'none';
+            videoFrame.classList.add('show');
+        });
 
-        function closeAgeGateAndStart() {
-            ageGate.classList.remove('show');
-            document.body.classList.remove('locked');
-            mainContent.classList.remove('content-blur');
-            mainContent.classList.add('content-unblur');
-            try { sessionStorage.setItem('ageVerified', '1'); } catch (e) { }
-            if (!videoStarted) {
-                videoStarted = true;
-                setTimeout(fetchVideo, 300);
+        videoPlayer.addEventListener('canplay', () => {
+            if (loading.style.display !== 'none') loading.style.display = 'none';
+            videoFrame.classList.add('show');
+            videoPlayer.play().catch(() => {});
+        });
+
+        videoPlayer.addEventListener('error', () => {
+            if (videoPlayer.src) {
+                showError('Video gagal diputar. Coba klik Random lagi.');
             }
-        }
+        });
 
-        function denyAge() {
-            try { sessionStorage.removeItem('ageVerified'); } catch (e) { }
-            ageGate.innerHTML = `
-                <div class="age-card">
-                    <div class="age-icon" style="background: linear-gradient(135deg, #444, #222); box-shadow: none;">🚫</div>
-                    <h2>Akses Ditolak</h2>
-                    <p class="age-sub">
-                        Anda harus berusia <b>18 tahun ke atas</b> untuk mengakses situs ini.
-                        Silakan tutup halaman ini.
-                    </p>
-                    <div class="age-actions">
-                        <a class="age-btn age-btn-no" href="https://www.google.com" style="text-decoration:none;">
-                            🏠 Pergi ke Google
-                        </a>
-                    </div>
-                </div>
-            `;
-            try { videoPlayer.pause(); } catch (e) { }
-            try { videoPlayer.removeAttribute('src'); videoPlayer.load(); } catch (e) { }
-            currentUrl = '';
-        }
-
-        btnAgeYes.addEventListener('click', closeAgeGateAndStart);
-        btnAgeNo.addEventListener('click', denyAge);
+        window.addEventListener('resize', () => {
+            if (videoPlayer.videoWidth && videoPlayer.videoHeight) {
+                applyVideoAspect();
+            }
+        });
 
         btnRandom.addEventListener('click', fetchVideo);
         btnCopy.addEventListener('click', copyUrl);
 
-        videoPlayer.addEventListener('loadedmetadata', () => {
-            vTime.textContent = '0:00 / ' + fmtTime(videoPlayer.duration);
-            metaStats.style.display = 'flex';
-            statRes.innerHTML = `📺 <b>${videoPlayer.videoWidth}×${videoPlayer.videoHeight}</b>`;
-            statDur.innerHTML = `⏱ <b>${fmtTime(videoPlayer.duration)}</b>`;
-        });
-
-        videoPlayer.addEventListener('timeupdate', () => {
-            if (videoPlayer.duration) {
-                progressFill.style.width = (videoPlayer.currentTime / videoPlayer.duration * 100) + '%';
-                vTime.textContent = fmtTime(videoPlayer.currentTime) + ' / ' + fmtTime(videoPlayer.duration);
-            }
-        });
-
-        videoPlayer.addEventListener('play', () => btnPlay.textContent = '⏸');
-        videoPlayer.addEventListener('pause', () => btnPlay.textContent = '▶');
-
-        progress.addEventListener('click', (e) => {
-            const rect = progress.getBoundingClientRect();
-            const ratio = (e.clientX - rect.left) / rect.width;
-            if (videoPlayer.duration) videoPlayer.currentTime = ratio * videoPlayer.duration;
-        });
-
-        btnPlay.addEventListener('click', () => {
-            if (videoPlayer.paused) videoPlayer.play();
-            else videoPlayer.pause();
-        });
-
-        btnMute.addEventListener('click', () => {
-            videoPlayer.muted = !videoPlayer.muted;
-            btnMute.textContent = videoPlayer.muted ? '🔇' : '🔊';
-        });
-
-        const speeds = [1, 1.25, 1.5, 2, 0.5];
-        let speedIdx = 0;
-        btnSpeed.addEventListener('click', () => {
-            speedIdx = (speedIdx + 1) % speeds.length;
-            videoPlayer.playbackRate = speeds[speedIdx];
-            btnSpeed.textContent = speeds[speedIdx] + 'x';
-        });
-
-        btnFull.addEventListener('click', () => {
-            if (document.fullscreenElement) document.exitFullscreen();
-            else videoPlayer.parentElement.requestFullscreen?.();
-        });
-
         window.addEventListener('DOMContentLoaded', () => {
-            let verified = false;
-            try { verified = sessionStorage.getItem('ageVerified') === '1'; } catch (e) { }
-            if (verified) {
-                mainContent.classList.remove('content-blur');
-                mainContent.classList.add('content-unblur');
-                videoStarted = true;
-                fetchVideo();
-            } else {
-                openAgeGate();
-            }
+            placeholder.style.display = 'flex';
+            videoFrame.classList.remove('show');
         });
     </script>
 </body>
